@@ -10,10 +10,20 @@ from functools import partial
 # functions for working with vectors
 #
 
+# this is a Python decorator!
+def check_compatible_lengths(function_of_two_vectors):
+    def checked(v, w):
+        if len(v) != len(w):
+            raise ArithmeticError("incompatible lengths")
+        return function_of_two_vectors(v, w)
+    return checked
+
+@check_compatible_lengths
 def vector_add(v,w):
     """adds two vectors componentwise"""
     return [v_i + w_i for v_i, w_i in zip(v,w)]
 
+@check_compatible_lengths
 def vector_subtract(v,w):
     """subtracts two vectors componentwise"""
     return [v_i - w_i for v_i, w_i in zip(v,w)]
@@ -30,6 +40,7 @@ def vector_mean(vectors):
     n = len(vectors)
     return scalar_multiply(1/n, vector_sum(vectors))
 
+@check_compatible_lengths
 def dot(v, w):
     """v_1 * w_1 + ... + v_n * w_n"""
     return sum(v_i * w_i for v_i, w_i in zip(v, w))
