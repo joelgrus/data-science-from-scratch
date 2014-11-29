@@ -13,7 +13,7 @@ print distance(v, w)
 print vector_mean([v, w])
 ```
   
-Or can be run from the command line to get a demo of what it does (and to get the exampls from the book):
+Or can be run from the command line to get a demo of what it does (and to execute the examples from the book):
 
 ```bat
 python recommender_systems.py
