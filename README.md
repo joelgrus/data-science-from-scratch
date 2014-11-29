@@ -1,7 +1,7 @@
-data-science-from-scratch
+Data Science from Scratch
 =========================
 
-code for Data Science From Scratch book
+Here's all the code and examples from my book __Data Science from Scratch__.
 
 Each can be used as a library, for example
 
@@ -18,3 +18,9 @@ Or can be run from the command line to get a demo of what it does (and to execut
 ```bat
 python recommender_systems.py
 ```  
+
+== Table of Contents
+
+1. Introduction
+2. A Crash Course in Python
+3. [Visualizing Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/visualizing_data.py)
