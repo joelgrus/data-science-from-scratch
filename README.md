@@ -19,6 +19,8 @@ Or can be run from the command line to get a demo of what it does (and to execut
 python recommender_systems.py
 ```  
 
+Additionally, I've collected all the [links](https://github.com/joelgrus/data-science-from-scratch/blob/master/links.md) from the book.
+
 ## Table of Contents
 
 1. Introduction
