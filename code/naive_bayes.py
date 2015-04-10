@@ -127,3 +127,7 @@ def train_and_test_model(path):
 
     print "spammiest_words", spammiest_words
     print "hammiest_words", hammiest_words
+
+
+if __name__ == "__main__":
+    train_and_test_model(r"c:\spam\*\*")

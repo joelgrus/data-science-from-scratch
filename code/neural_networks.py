@@ -3,6 +3,8 @@ from collections import Counter
 from functools import partial
 from linear_algebra import dot
 import math, random
+import matplotlib
+import matplotlib.pyplot as plt
 
 def step_function(x):
     return 1 if x >= 0 else 0
@@ -57,6 +59,35 @@ def backpropagate(network, input_vector, target):
     for i, hidden_neuron in enumerate(network[0]):
         for j, input in enumerate(input_vector + [1]):
             hidden_neuron[j] -= hidden_deltas[i] * input
+
+def patch(x, y, hatch, color):
+    """return a matplotlib 'patch' object with the specified
+    location, crosshatch pattern, and color"""
+    return matplotlib.patches.Rectangle((x - 0.5, y - 0.5), 1, 1,
+                                        hatch=hatch, fill=False, color=color)
+
+
+def show_weights(neuron_idx):
+    weights = network[0][neuron_idx]
+    abs_weights = map(abs, weights)
+
+    grid = [abs_weights[row:(row+5)] # turn the weights into a 5x5 grid
+            for row in range(0,25,5)] # [weights[0:5], ..., weights[20:25]]
+
+    ax = plt.gca() # to use hatching, we'll need the axis
+
+    ax.imshow(grid, # here same as plt.imshow
+              cmap=matplotlib.cm.binary, # use white-black color scale
+              interpolation='none') # plot blocks as blocks
+
+    # cross-hatch the negative weights
+    for i in range(5): # row
+        for j in range(5): # column
+            if weights[5*i + j] < 0: # row i, column j = weights[5*i + j]
+                # add black and white hatches, so visible whether dark or light
+                ax.add_patch(patch(j, i, '/', "white"))
+                ax.add_patch(patch(j, i, '\\', "black"))
+    plt.show()
 
 if __name__ == "__main__":
 
@@ -152,12 +183,12 @@ if __name__ == "__main__":
         for input_vector, target_vector in zip(inputs, targets):
             backpropagate(network, input_vector, target_vector)
 
-
     def predict(input):
         return feed_forward(network, input)[-1]
 
     for i, input in enumerate(inputs):
-        print i, [round(x,2) for x in predict(input)]
+        outputs = predict(input)
+        print i, [round(p,2) for p in outputs]
 
     print """.@@@.
 ...@@

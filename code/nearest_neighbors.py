@@ -66,10 +66,14 @@ def plot_cities():
 
     plt.legend(loc=0)          # let matplotlib choose the location
     plt.axis([-130,-60,20,55]) # set the axes
+    plt.title("Favorite Programming Languages")
     plt.show()
 
 def classify_and_plot_grid(k=1):
     plots = { "Java" : ([], []), "Python" : ([], []), "R" : ([], []) }
+    markers = { "Java" : "o", "Python" : "s", "R" : "^" }
+    colors  = { "Java" : "r", "Python" : "b", "R" : "g" }
+
     for longitude in range(-130, -60):
         for latitude in range(20, 55):
             predicted_language = knn_classify(k, cities, [longitude, latitude])
@@ -79,12 +83,13 @@ def classify_and_plot_grid(k=1):
     # create a scatter series for each language
     for language, (x, y) in plots.iteritems():
         plt.scatter(x, y, color=colors[language], marker=markers[language],
-                          label=language, zorder=10)
+                          label=language, zorder=0)
 
-    plot_state_borders(plt)    # assume we have a function that does this
+    plot_state_borders(plt, color='black')    # assume we have a function that does this
 
     plt.legend(loc=0)          # let matplotlib choose the location
     plt.axis([-130,-60,20,55]) # set the axes
+    plt.title(str(k) + "-Nearest Neighbor Programming Languages")
     plt.show()
 
 #

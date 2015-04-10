@@ -63,11 +63,11 @@ def plot_squared_clustering_errors(plt):
 # using clustering to recolor an image
 #
 
-def recolor_image(input_file, k):
+def recolor_image(input_file, k=5):
 
     img = mpimg.imread(path_to_png_file)
     pixels = [pixel for row in img for pixel in row]
-    clusterer = KMeans(5)
+    clusterer = KMeans(k)
     clusterer.train(pixels) # this might take a while    
 
     def recolor(pixel):
@@ -85,91 +85,80 @@ def recolor_image(input_file, k):
 # hierarchical clustering
 #
 
+def is_leaf(cluster):
+    """a cluster is a leaf if it has length 1"""
+    return len(cluster) == 1
+
+def get_children(cluster):
+    """returns the two children of this cluster if it's a merged cluster;
+    raises an exception if this is a leaf cluster"""
+    if is_leaf(cluster):
+        raise TypeError("a leaf cluster has no children")
+    else:
+        return cluster[1]
+
+def get_values(cluster):
+    """returns the value in this cluster (if it's a leaf cluster)
+    or all the values in the leaf clusters below it (if it's not)"""
+    if is_leaf(cluster):
+        return cluster # is already a 1-tuple containing value
+    else:
+        return [value
+                for child in get_children(cluster)
+                for value in get_values(child)]
+
 def cluster_distance(cluster1, cluster2, distance_agg=min):
     """finds the aggregate distance between elements of cluster1
     and elements of cluster2"""
-    return distance_agg(distance(input_i, input_j)
-                        for input_i in cluster1.members()
-                        for input_j in cluster2.members())
+    return distance_agg([distance(input1, input2)
+                        for input1 in get_values(cluster1)
+                        for input2 in get_values(cluster2)])
 
-class LeafCluster:
-    """stores a single input
-    it has 'infinite depth' so that we never try to split it"""
+def get_merge_order(cluster):
+    if is_leaf(cluster):
+        return float('inf')
+    else:
+        return cluster[0] # merge_order is first element of 2-tuple
 
-    def __init__(self, value):
-        self.value = value
-        self.depth = float('inf')
-        
-    def __repr__(self):
-        return str(self.value)
-        
-    def members(self):
-        """a LeafCluster has only one member"""
-        return [self.value]
-                
-class MergedCluster:
-    """a new cluster that's the result of 'merging' two clusters"""
+def bottom_up_cluster(inputs, distance_agg=min):
+    # start with every input a leaf cluster / 1-tuple
+    clusters = [(input,) for input in inputs]
+    
+    # as long as we have more than one cluster left...
+    while len(clusters) > 1:
+        # find the two closest clusters
+        c1, c2 = min([(cluster1, cluster2)
+                     for i, cluster1 in enumerate(clusters)
+                     for cluster2 in clusters[:i]],
+                     key=lambda (x, y): cluster_distance(x, y, distance_agg))
 
-    def __init__(self, branches, depth):
-        self.branches = branches
-        self.depth = depth
+        # remove them from the list of clusters
+        clusters = [c for c in clusters if c != c1 and c != c2]
 
-    def __repr__(self):
-        """show as {(depth) child1, child2}"""
-        return ("{(" + str(self.depth) + ") " +
-                ", ".join(str(b) for b in self.branches) + " }")
-        
-    def members(self):
-        """recursively get members by looking for members of branches"""
-        return [member
-                for cluster in self.branches
-                for member in cluster.members()]
+        # merge them, using merge_order = # of clusters left
+        merged_cluster = (len(clusters), [c1, c2])
 
+        # and add their merge
+        clusters.append(merged_cluster)
 
-class BottomUpClusterer:
+    # when there's only one cluster left, return it
+    return clusters[0]
 
-    def __init__(self, distance_agg=min):
-        self.agg = distance_agg
-        self.clusters = None
-        
-    def train(self, inputs):
-        # start with each input its own cluster
-        self.clusters = [LeafCluster(input) for input in inputs]
+def generate_clusters(base_cluster, num_clusters):
+    # start with a list with just the base cluster
+    clusters = [base_cluster]
+    
+    # as long as we don't have enough clusters yet...
+    while len(clusters) < num_clusters:
+        # choose the last-merged of our clusters
+        next_cluster = min(clusters, key=get_merge_order)
+        # remove it from the list
+        clusters = [c for c in clusters if c != next_cluster]
+        # and add its children to the list (i.e., unmerge it)
+        clusters.extend(get_children(next_cluster))
 
-        while len(self.clusters) > 1:
-                    
-            # find the two closest clusters
-            c1, c2 = min([(cluster1, cluster2)
-                          for cluster1 in self.clusters
-                          for cluster2 in self.clusters
-                          if cluster1 != cluster2],
-                         key=lambda (c1, c2): cluster_distance(c1, c2, 
-                                                               self.agg))
-
-            merged_cluster = MergedCluster([c1, c2], len(self.clusters))
-                                            
-            self.clusters = [c for c in self.clusters
-                             if c not in [c1, c2]]
-                              
-            self.clusters.append(merged_cluster)
-            
-    def get_clusters(self, num_clusters):
-        """extract num_clusters clusters from the hierachy"""
-        
-        clusters = self.clusters[:] # create a copy so we can modify it
-        while len(clusters) < num_clusters:
-            # choose the least deep cluster
-            next_cluster = min(clusters, key=lambda c: c.depth)
-            # remove it from the list
-            clusters = [c for c in clusters if c != next_cluster]
-            # and add its children
-            clusters.extend(next_cluster.branches)
-
-        return clusters
-
-
-
-
+    # once we have enough clusters...
+    return clusters
 
 if __name__ == "__main__":
 
@@ -198,11 +187,16 @@ if __name__ == "__main__":
 
     print "bottom up hierarchical clustering"
 
-    buc = BottomUpClusterer() # or BottomUpClusterer(max) if you like
-    buc.train(inputs)
-    print buc.clusters[0]
+    base_cluster = bottom_up_cluster(inputs)
+    print base_cluster
 
     print
-    print "three clusters:"
-    for cluster in buc.get_clusters(3):
-        print cluster
+    print "three clusters, min:"
+    for cluster in generate_clusters(base_cluster, 3):
+        print get_values(cluster)
+
+    print
+    print "three clusters, max:"
+    base_cluster = bottom_up_cluster(inputs, max)
+    for cluster in generate_clusters(base_cluster, 3):
+        print get_values(cluster)

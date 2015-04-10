@@ -3,7 +3,7 @@ from collections import Counter
 import math, random
 
 def random_kid():
-    return "B" if random.random() < 0.5 else "G"
+    return random.choice(["boy", "girl"])
 
 def uniform_pdf(x):
     return 1 if x >= 0 and x < 1 else 0
@@ -105,11 +105,11 @@ if __name__ == "__main__":
     for _ in range(10000):
         younger = random_kid()
         older = random_kid()
-        if older == "G":
+        if older == "girl":
             older_girl += 1
-        if older == "G" and younger == "G":
+        if older == "girl" and younger == "girl":
             both_girls += 1
-        if older == "G" or younger == "G":
+        if older == "girl" or younger == "girl":
             either_girl += 1
 
     print "P(both | older):", both_girls / older_girl      # 0.514 ~ 1/2

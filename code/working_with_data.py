@@ -1,5 +1,5 @@
 from __future__ import division
-from collections import Counter
+from collections import Counter, defaultdict
 from functools import partial
 from linear_algebra import shape, get_row, get_column, make_matrix, \
     vector_mean, vector_sum, dot, magnitude, vector_subtract, scalar_multiply
@@ -10,22 +10,18 @@ import math, random, csv
 import matplotlib.pyplot as plt
 import dateutil.parser
 
-def floor(x):
-    """int() always truncates toward zero, floor() always truncates down"""
-    if x > 0: return int(x)
-    else: return int(x) - 1
-
 def bucketize(point, bucket_size):
     """floor the point to the next lower multiple of bucket_size"""
-    return bucket_size * floor(point / bucket_size)
+    return bucket_size * math.floor(point / bucket_size)
 
 def make_histogram(points, bucket_size):
     """buckets the points and counts how many in each bucket"""
     return Counter(bucketize(point, bucket_size) for point in points)
 
-def plot_histogram(points, bucket_size):
+def plot_histogram(points, bucket_size, title=""):
     histogram = make_histogram(points, bucket_size)
     plt.bar(histogram.keys(), histogram.values(), width=bucket_size)
+    plt.title(title)
     plt.show()
 
 def compare_two_distributions():
@@ -36,9 +32,8 @@ def compare_two_distributions():
     normal = [57 * inverse_normal_cdf(random.random())
               for _ in range(200)]
 
-    plot_histogram(uniform, 10)
-    plot_histogram(normal, 10)
-
+    plot_histogram(uniform, 10, "Uniform Histogram")
+    plot_histogram(normal, 10, "Normal Histogram")
 
 def random_normal(): 
     """returns a random draw from a standard normal distribution"""
@@ -105,31 +100,84 @@ def make_scatterplot_matrix():
             if i < num_columns - 1: ax[i][j].xaxis.set_visible(False)
             if j > 0: ax[i][j].yaxis.set_visible(False)
 
-    # fix the bottom right axis labels, which are wrong because
-    # the bottom right subplot only has text in it
+    # fix the bottom right and top left axis labels, which are wrong because
+    # their charts only have text in them
     ax[-1][-1].set_xlim(ax[0][-1].get_xlim())
+    ax[0][0].set_ylim(ax[0][1].get_ylim())
 
     plt.show()
 
 def parse_row(input_row, parsers):
     """given a list of parsers (some of which may be None)
     apply the appropriate one to each element of the input_row"""
+    return [parser(value) if parser is not None else value
+            for value, parser in zip(input_row, parsers)]
 
-    return [safe(parser)(input) if parser is not None else input
-            for input, parser in zip(input_row, parsers)]
-
-def parse_with(reader, parsers):
+def parse_rows_with(reader, parsers):
     """wrap a reader to apply the parsers to each of its rows"""
     for row in reader:
         yield parse_row(row, parsers)
 
-def safe(f):
+def try_or_none(f):
     """wraps f to return None if f raises an exception
     assumes f takes only one input"""
-    def safe_f(x):
+    def f_or_none(x):
         try: return f(x)
         except: return None
-    return safe_f
+    return f_or_none
+
+def parse_row(input_row, parsers):
+    return [try_or_none(parser)(value) if parser is not None else value
+            for value, parser in zip(input_row, parsers)]
+
+def try_parse_field(field_name, value, parser_dict):
+    """try to parse value using the appropriate function from parser_dict"""
+    parser = parser_dict.get(field_name) # None if no such entry
+    if parser is not None:
+        return try_or_none(parser)(value)
+    else:
+        return value
+
+def parse_dict(input_dict, parser_dict):
+    return { field_name : try_parse_field(field_name, value, parser_dict)
+             for field_name, value in input_dict.iteritems() }
+
+#
+#
+# MANIPULATING DATA
+#
+#
+
+def picker(field_name):
+    """returns a function that picks a field out of a dict"""
+    return lambda row: row[field_name]
+
+def pluck(field_name, rows):
+    """turn a list of dicts into the list of field_name values"""
+    return map(picker(field_name), rows)
+
+def group_by(grouper, rows, value_transform=None):
+    # key is output of grouper, value is list of rows
+    grouped = defaultdict(list)
+    for row in rows:
+        grouped[grouper(row)].append(row)
+    if value_transform is None:
+        return grouped
+    else:
+        return { key : value_transform(rows)
+                 for key, rows in grouped.iteritems() }
+
+def percent_price_change(yesterday, today):
+    return today["closing_price"] / yesterday["closing_price"] - 1
+
+def day_over_day_changes(grouped_rows):
+    # sort the rows by date
+    ordered = sorted(grouped_rows, key=picker("date"))
+    # zip with an offset to get pairs of consecutive days
+    return [{ "symbol" : today["symbol"],
+              "date" : today["date"],
+              "change" : percent_price_change(yesterday, today) }
+             for yesterday, today in zip(ordered, ordered[1:])]
 
 #
 #
@@ -270,7 +318,7 @@ def de_mean_matrix(A):
     """returns the result of subtracting from every value in A the mean
     value of its column. the resulting matrix has mean 0 in every column"""
     nr, nc = shape(A)
-    column_means = vector_mean(A)
+    column_means, _ = scale(A)
     return make_matrix(nr, nc, lambda i, j: A[i][j] - column_means[j])
 
 def direction(w):
@@ -350,14 +398,63 @@ if __name__ == "__main__":
 
     with open("comma_delimited_stock_prices.csv", "rb") as f:
         reader = csv.reader(f)
-        for line in parse_with(reader, [dateutil.parser.parse, None, float]):
+        for line in parse_rows_with(reader, [dateutil.parser.parse, None, float]):
             data.append(line)
 
     for row in data:
         if any(x is None for x in row):
             print row
 
-    print
+    print "stocks"
+    with open("stocks.txt", "rb") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        data = [parse_dict(row, { 'date' : dateutil.parser.parse,
+                                  'closing_price' : float }) 
+                for row in reader]
+
+    max_aapl_price = max(row["closing_price"]
+                         for row in data
+                         if row["symbol"] == "AAPL")
+    print "max aapl price", max_aapl_price
+
+    # group rows by symbol
+    by_symbol = defaultdict(list)
+    
+    for row in data:
+        by_symbol[row["symbol"]].append(row)
+    
+    # use a dict comprehension to find the max for each symbol
+    max_price_by_symbol = { symbol : max(row["closing_price"]
+                            for row in grouped_rows)
+                            for symbol, grouped_rows in by_symbol.iteritems() }
+    print "max price by symbol"
+    print max_price_by_symbol
+
+    # key is symbol, value is list of "change" dicts
+    changes_by_symbol = group_by(picker("symbol"), data, day_over_day_changes)
+    # collect all "change" dicts into one big list
+    all_changes = [change
+                   for changes in changes_by_symbol.values()
+                   for change in changes]
+
+    print "max change", max(all_changes, key=picker("change"))
+    print "min change", min(all_changes, key=picker("change"))
+
+    # to combine percent changes, we add 1 to each, multiply them, and subtract 1
+    # for instance, if we combine +10% and -20%, the overall change is
+    # (1 + 10%) * (1 - 20%) - 1 = 1.1 * .8 - 1 = -12%
+    def combine_pct_changes(pct_change1, pct_change2):
+        return (1 + pct_change1) * (1 + pct_change2) - 1
+
+    def overall_change(changes):
+        return reduce(combine_pct_changes, pluck("change", changes))
+
+    overall_change_by_month = group_by(lambda row: row['date'].month,
+                                       all_changes,
+                                       overall_change)
+    print "overall change by month"
+    print overall_change_by_month
+
     print "rescaling"
 
     data = [[1, 20, 2],

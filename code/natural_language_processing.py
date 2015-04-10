@@ -37,18 +37,19 @@ def get_document():
 
     url = "http://radar.oreilly.com/2010/06/what-is-data-science.html"
     html = requests.get(url).text
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, 'html5lib')
 
-    content = soup.find("div", "entry-content")         # find entry-content div
-    paragraphs = content("p")                           # get all the <p> elements
-    text = [fix_unicode(p.text) for p in paragraphs]    # extract the text
+    content = soup.find("div", "entry-content")        # find entry-content div
+    regex = r"[\w']+|[\.]"                             # matches a word or a period
 
-    # regex that matches either a word or a period
-    regex = r"[\w']+|[\.]"                             
+    document = []
 
-    return [word                                    # and find all the words
-            for line in text
-            for word in re.findall(regex, line)]
+
+    for paragraph in content("p"):
+        words = re.findall(regex, fix_unicode(paragraph.text))
+        document.extend(words)
+
+    return document
 
 def generate_using_bigrams(transitions):
     current = "."   # this means the next word will start a sentence

@@ -17,6 +17,12 @@ class Table:
         row_dict = dict(zip(self.columns, row_values))
         self.rows.append(row_dict)
 
+    def update(self, updates, predicate):
+        for row in self.rows:
+            if predicate(row):
+                for column, new_value in updates.iteritems():
+                    row[column] = new_value
+
     def delete(self, predicate=lambda row: True):
         """delete all rows matching predicate
         or all rows if no predicate supplied"""
@@ -240,7 +246,7 @@ if __name__ == "__main__":
     # SUBQUERIES
 
     likes_sql_user_ids = user_interests \
-        .where(lambda row: row["interest"] == "SQL")
+        .where(lambda row: row["interest"] == "SQL") \
         .select(keep_columns=['user_id'])
 
     likes_sql_user_ids.group_by(group_by_columns=[],

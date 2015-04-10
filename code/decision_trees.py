@@ -13,8 +13,9 @@ def class_probabilities(labels):
             for count in Counter(labels).values()]
 
 def data_entropy(labeled_data):        
-    return entropy(class_probabilities([label
-                                        for _, label in labeled_data]))
+    labels = [label for _, label in labeled_data]
+    probabilities = class_probabilities(labels)
+    return entropy(probabilities)
 
 def partition_entropy(subsets):
     """find the entropy from this partition of data into subsets"""
@@ -51,11 +52,14 @@ def classify(tree, input):
    
     # otherwise find the correct subtree
     attribute, subtree_dict = tree
-    value = input[attribute]
-    subtree = subtree_dict[value]
     
-    # and use it to classify the input
-    return classify(subtree, input)
+    subtree_key = input.get(attribute)  # None if input is missing attribute
+
+    if subtree_key not in subtree_dict: # if no subtree for key,
+        subtree_key = None              # we'll use the None subtree
+    
+    subtree = subtree_dict[subtree_key] # choose the appropriate subtree
+    return classify(subtree, input)     # and use it to classify the input
 
 def build_tree_id3(inputs, split_candidates=None):
 
@@ -89,6 +93,8 @@ def build_tree_id3(inputs, split_candidates=None):
     # recursively build the subtrees
     subtrees = { attribute : build_tree_id3(subset, new_candidates)
                  for attribute, subset in partitions.iteritems() }
+
+    subtrees[None] = num_trues > num_falses # default case
 
     return (best_attribute, subtrees)
 

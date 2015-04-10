@@ -11,6 +11,7 @@ def make_friend_counts_histogram(plt):
     ys = [friend_counts[x] for x in xs]
     plt.bar(xs, ys)
     plt.axis([0,101,0,25])
+    plt.title("Histogram of Friend Counts")
     plt.xlabel("# of friends")
     plt.ylabel("# of people")
     plt.show()

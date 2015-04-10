@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     counter = Counter(word.lower()                      
                       for line in sys.stdin             
-                      for word in line.split().strip()  
+                      for word in line.strip().split()  
                       if word)                          
             
     for word, count in counter.most_common(num_words):
