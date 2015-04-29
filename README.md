@@ -3,7 +3,7 @@ Data Science from Scratch
 
 Here's all the code and examples from my book __[Data Science from Scratch](http://joelgrus.com/2015/04/26/data-science-from-scratch-first-principles-with-python/)__.
 
-Each can be used as a library, for example
+Each can be imported as a module, for example (after you cd into the /code directory):
 
 ```python
 from linear_algebra import distance, vector_mean
