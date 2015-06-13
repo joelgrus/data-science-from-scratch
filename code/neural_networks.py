@@ -52,7 +52,7 @@ def backpropagate(network, input_vector, target):
 
     # back-propagate errors to hidden layer
     hidden_deltas = [hidden_output * (1 - hidden_output) * 
-                      dot(output_deltas, [n[i] for n in output_layer]) 
+                      dot(output_deltas, [n[i] for n in network[-1]]) 
                      for i, hidden_output in enumerate(hidden_outputs)]
 
     # adjust weights for hidden layer (network[0])
