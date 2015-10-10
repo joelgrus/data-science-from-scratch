@@ -10,7 +10,7 @@ def sum_of_squares(v):
 def difference_quotient(f, x, h):
     return (f(x + h) - f(x)) / h
 
-def plot_estimated_derivative(plt):
+def plot_estimated_derivative():
 
     def square(x):
         return x * x
@@ -18,7 +18,7 @@ def plot_estimated_derivative(plt):
     def derivative(x):
         return 2 * x
 
-    derivative_estimate = partial(difference_quotient, square, h=0.00001)
+    derivative_estimate = lambda x: difference_quotient(square, x, h=0.00001)
 
     # plot to show they're basically the same
     import matplotlib.pyplot as plt
