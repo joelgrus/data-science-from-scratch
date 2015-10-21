@@ -1,5 +1,9 @@
 from __future__ import division
 
+# at this stage in the book we haven't actually installed matplotlib,
+# comment this out if you need to
+from matplotlib import pyplot as plt
+
 ##########################
 #                        #
 # FINDING KEY CONNECTORS #
@@ -17,7 +21,7 @@ users = [
     { "id": 7, "name": "Devin" },
     { "id": 8, "name": "Kate" },
     { "id": 9, "name": "Klein" },
-    { "id": 10, "name": "Jen" } 
+    { "id": 10, "name": "Jen" }
 ]
 
 friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
@@ -28,11 +32,11 @@ friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
 for user in users:
     user["friends"] = []
 
-# and then populate the lists with friendships    
+# and then populate the lists with friendships
 for i, j in friendships:
     # this works because users[i] is the user whose id is i
     users[i]["friends"].append(users[j]) # add i as a friend of j
-    users[j]["friends"].append(users[i]) # add j as a friend of i 
+    users[j]["friends"].append(users[i]) # add j as a friend of i
 
 def number_of_friends(user):
     """how many friends does _user_ have?"""
@@ -95,8 +99,8 @@ interests = [
 ]
 
 def data_scientists_who_like(target_interest):
-    return [user_id 
-            for user_id, user_interest in interests 
+    return [user_id
+            for user_id, user_interest in interests
             if user_interest == target_interest]
 
 from collections import defaultdict
@@ -115,7 +119,7 @@ for user_id, interest in interests:
 
 def most_common_interests_with(user_id):
     return Counter(interested_user_id
-        for interest in interests_by_user["user_id"]   
+        for interest in interests_by_user["user_id"]
         for interested_user_id in users_by_interest[interest]
         if interested_user_id != user_id)
 
@@ -125,21 +129,19 @@ def most_common_interests_with(user_id):
 #                         #
 ###########################
 
-salaries_and_tenures = [(83000, 8.7), (88000, 8.1), 
+salaries_and_tenures = [(83000, 8.7), (88000, 8.1),
                         (48000, 0.7), (76000, 6),
                         (69000, 6.5), (76000, 7.5),
                         (60000, 2.5), (83000, 10),
                         (48000, 1.9), (63000, 4.2)]
-                        
-from matplotlib import pyplot as plt  # not loaded by default                      
 
-def make_chart_salaries_by_tenure(plt):
+def make_chart_salaries_by_tenure():
     tenures = [tenure for salary, tenure in salaries_and_tenures]
     salaries = [salary for salary, tenure in salaries_and_tenures]
     plt.scatter(tenures, salaries)
     plt.xlabel("Years Experience")
     plt.ylabel("Salary")
-    plt.show()    
+    plt.show()
 
 # keys are years
 # values are the salaries for each tenure
@@ -148,15 +150,15 @@ salary_by_tenure = defaultdict(list)
 for salary, tenure in salaries_and_tenures:
     salary_by_tenure[tenure].append(salary)
 
-average_salary_by_tenure = { 
-    tenure : sum(salaries) / len(salaries)   
-    for tenure, salaries in salary_by_tenure.items() 
+average_salary_by_tenure = {
+    tenure : sum(salaries) / len(salaries)
+    for tenure, salaries in salary_by_tenure.items()
 }
 
 def tenure_bucket(tenure):
     if tenure < 2: return "less than two"
     elif tenure < 5: return "between two and five"
-    else: return "more than five"    
+    else: return "more than five"
 
 salary_by_tenure_bucket = defaultdict(list)
 
@@ -196,7 +198,7 @@ if __name__ == "__main__":
 
     print
     print "######################"
-    print "#"    
+    print "#"
     print "# FINDING KEY CONNECTORS"
     print "#"
     print "######################"
@@ -213,13 +215,13 @@ if __name__ == "__main__":
                          for user in users]
 
     print "users sorted by number of friends:"
-    print sorted(num_friends_by_id, 
+    print sorted(num_friends_by_id,
                  key=lambda (user_id, num_friends): num_friends, # by number of friends
                  reverse=True)                                   # largest to smallest
 
     print
     print "######################"
-    print "#"    
+    print "#"
     print "# DATA SCIENTISTS YOU MAY KNOW"
     print "#"
     print "######################"
@@ -231,7 +233,7 @@ if __name__ == "__main__":
 
     print
     print "######################"
-    print "#"    
+    print "#"
     print "# SALARIES AND TENURES"
     print "#"
     print "######################"
@@ -242,7 +244,7 @@ if __name__ == "__main__":
 
     print
     print "######################"
-    print "#"    
+    print "#"
     print "# MOST COMMON WORDS"
     print "#"
     print "######################"
