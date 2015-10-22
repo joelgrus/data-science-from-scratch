@@ -6,6 +6,8 @@ out there were quite a few. Start-to-finish I'd say the porting took me about 4 
 and I'm pretty familiar with the code. I think I got everything, let me know if you find something 
 that doesn't work in Python 3.
 
+(For the most part my goal was to get everything to *work* in Python 3, I didn't spend any time on trying to make it *idiomatic* Python 3. Later.)
+
 Here's a fairly comprehensive list of the issues I ran into.
 
 ## `print`
@@ -60,10 +62,12 @@ list(filter(is_even, my_list))[0]
 
 And likewise with `zip`, which in many instances needs to be replaced with `list(zip(...))`. (In particular, this uglies up my magic unzip trick.)
 
+At least when you try to index into an iterator you get an error. It's potentially worse if you iterate over it expecting `list` behavior.
+
 In the most subtle case this bit me at (in essence):
 
 ```
-data = map(clean, data))
+data = map(clean, data)
 x = [row[0] for row in data]
 y = [row[1] for row in data]
 ```
@@ -77,6 +81,8 @@ data = list(map(clean, data))
 
 Similarly, if you have a `dict` then its `.keys()` is lazy, so you have to wrap
 it in `list` as well. This is possibly my least favorite change in Python 3.
+
+A better solution is probably to replace most of these with list comprehensions.
 
 ## binary mode for CSVs
 
