@@ -3,8 +3,10 @@
 After many requests, here's the code from the book updated from Python 2 to Python 3.
 I have been telling people that there aren't too many changes required, but it turned
 out there were quite a few. Start-to-finish I'd say the porting took me about 4 hours,
-and I'm pretty familiar with the code. Here's a fairly comprehensive list of the issues
-I ran into.
+and I'm pretty familiar with the code. I think I got everything, let me know if you find something 
+that doesn't work in Python 3.
+
+Here's a fairly comprehensive list of the issues I ran into.
 
 ## `print`
 
@@ -114,4 +116,4 @@ encoding='ISO-8859-1'
 
 # Bugs
 
-For some reason, my Python 3 topic model in `natural_language_processing` gives slightly different results from the Python 2 version. I suspect this means there is a bug in the port, but I haven't figured out what it is yet.
+For some reason, my Python 3 topic model in `natural_language_processing` gives slightly different results from the Python 2 version. I suspect this means there is a bug in the port, but I haven't figured out what it is yet. Let me know if you find any more bugs, it's possible there's a lazy `zip` or `map` that I missed.
