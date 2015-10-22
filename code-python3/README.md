@@ -32,11 +32,42 @@ has to be replaced with
 key=lambda pair: pair[1]
 ```
 
-## `.iteritems()`
+## laziness
 
 In Python 3, laziness is the order of the day. In particular, `dict`-like
 objects no longer have `.iteritems()` properties, so those all have to be replaced
 with `.items()`
+
+Similarly, `filter` now returns an iterator, so that code like
+
+```
+filter(is_even, my_list)[0]
+```
+
+doesn't work, and needs to be replaced with
+
+```
+list(filter(is_even, my_list))[0]
+```
+
+And likewise with `zip`, which in many instances needs to be replaced with `list(zip(...))`.
+
+In the most subtle case this bit me at (in essence):
+
+```
+data = map(clean, data))
+x = [row[0] for row in data]
+y = [row[1] for row in data]
+```
+
+in this case the `map` makes `data` a generator, and once the `x` definition iterates
+over it, it's gone. The solution is
+
+```
+data = list(map(clean, data))
+```
+
+
 
 ## binary mode for CSVs
 

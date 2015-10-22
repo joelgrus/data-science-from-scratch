@@ -13,10 +13,10 @@ def split_data(data, prob):
     return results
 
 def train_test_split(x, y, test_pct):
-    data = zip(x, y)                              # pair corresponding values
+    data = list(zip(x, y))                        # pair corresponding values
     train, test = split_data(data, 1 - test_pct)  # split the dataset of pairs
-    x_train, y_train = zip(*train)                # magical un-zip trick
-    x_test, y_test = zip(*test)
+    x_train, y_train = list(zip(*train))          # magical un-zip trick
+    x_test, y_test = list(zip(*test))
     return x_train, x_test, y_train, y_test
 
 #
