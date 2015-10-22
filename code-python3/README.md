@@ -63,3 +63,13 @@ that uses it needs to add a
 ```
 from functools import reduce
 ```
+
+## bad spam characters
+
+The Spam Assassin corpus files from the naive bayes chapter (are old and)
+contain some ugly characters that caused me problems until I tried opening the
+files with
+
+```
+encoding='ISO-8859-1'
+```
