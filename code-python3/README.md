@@ -33,14 +33,29 @@ This was mostly just tedious. I should have used 2to3.
 tuple unpacking in function parameters. In particular, that means that code like
 
 ```
-key=lambda (a, b): b
+lambda (a, b): b
 ```
 
 has to be replaced with
 
 ```
-key=lambda pair: pair[1]
+lambda pair: pair[1]
 ```
+
+This is unfortunate, as I tend to write a lot of code like
+
+```
+sorted(words_and_counts, key=lambda (word, count): count, reverse=True)
+```
+
+Probably I should have just created a `helpers.py` with a few functions like
+
+```
+def fst(pair): return pair[0]
+def snd(pair): return pair[1]
+```
+
+Maybe next time.
 
 ## laziness
 
