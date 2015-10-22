@@ -1,6 +1,6 @@
-from __future__ import division
 from collections import Counter
 from linear_algebra import distance, vector_subtract, scalar_multiply
+from functools import reduce
 import math, random
 
 def sum_of_squares(v):

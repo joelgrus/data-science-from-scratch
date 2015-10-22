@@ -3,7 +3,7 @@
 import re, math, random # regexes, math functions, random numbers
 import matplotlib.pyplot as plt # pyplot
 from collections import defaultdict, Counter
-from functools import partial
+from functools import partial, reduce
 
 #
 # functions for working with vectors
