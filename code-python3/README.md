@@ -1,5 +1,11 @@
 # Updating the code from Python 2 to Python 3
 
+After many requests, here's the code from the book updated from Python 2 to Python 3.
+I have been telling people that there aren't too many changes required, but it turned
+out there were quite a few. Start-to-finish I'd say the porting took me about 4 hours,
+and I'm pretty familiar with the code. Here's a fairly comprehensive list of the issues
+I ran into.
+
 ## `print`
 
 The first and most obvious difference is that in Python 3 `print` takes parentheses.
@@ -15,12 +21,12 @@ had to be replaced with
 print("stuff", 1)
 ```
 
-This is mostly tedious.
+This was mostly just tedious. I should have used 2to3.
 
 ## tuple unpacking
 
 <a href="https://www.python.org/dev/peps/pep-3113/">PEP-3113</a> eliminates
-tuple unpacking in certain places. In particular, that means that code like
+tuple unpacking in function parameters. In particular, that means that code like
 
 ```
 key=lambda (a, b): b
@@ -50,7 +56,7 @@ doesn't work, and needs to be replaced with
 list(filter(is_even, my_list))[0]
 ```
 
-And likewise with `zip`, which in many instances needs to be replaced with `list(zip(...))`.
+And likewise with `zip`, which in many instances needs to be replaced with `list(zip(...))`. (In particular, this uglies up my magic unzip trick.)
 
 In the most subtle case this bit me at (in essence):
 
@@ -68,7 +74,7 @@ data = list(map(clean, data))
 ```
 
 Similarly, if you have a `dict` then its `.keys()` is lazy, so you have to wrap
-it in `list` as well.
+it in `list` as well. This is possibly my least favorite change in Python 3.
 
 ## binary mode for CSVs
 
