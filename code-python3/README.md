@@ -67,7 +67,8 @@ over it, it's gone. The solution is
 data = list(map(clean, data))
 ```
 
-
+Similarly, if you have a `dict` then its `.keys()` is lazy, so you have to wrap
+it in `list` as well.
 
 ## binary mode for CSVs
 
