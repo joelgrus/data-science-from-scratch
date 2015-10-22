@@ -111,3 +111,7 @@ files with
 ```
 encoding='ISO-8859-1'
 ```
+
+# Bugs
+
+For some reason, my Python 3 topic model in `natural_language_processing` gives slightly different results from the Python 2 version. I suspect this means there is a bug in the port, but I haven't figured out what it is yet.
