@@ -40,14 +40,16 @@ with `.items()`
 
 ## binary mode for CSVs
 
-Binary mode for CSVs. In Python 2 you would open CSV files in binary mode to
+In Python 2 it was best practice to open CSV files in binary mode to
 make sure you dealt properly with Windows line endings:
 
 ```
 f = open("some.csv", "rb")
 ```
 
-In Python 3 you open them in text mode and just specify the line ending types:
+In Python 3 that doesn't work for various reasons having to do with raw bytes
+and string encodings. Instead you need to open them in text mode and
+specify the line ending types:
 
 ```
 f = open("some.csv", 'r', encoding='utf8', newline='')
