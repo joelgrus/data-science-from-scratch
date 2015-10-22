@@ -1,4 +1,3 @@
-from __future__ import division
 import math, random, re, datetime
 from collections import defaultdict, Counter
 from functools import partial

@@ -1,4 +1,3 @@
-from __future__ import division
 from collections import Counter
 from functools import partial
 from linear_algebra import dot
