@@ -24,6 +24,7 @@ def vector_sum(vectors):
 def scalar_multiply(c, v):
     return [c * v_i for v_i in v]
 
+# this isn't right if you don't from __future__ import division
 def vector_mean(vectors):
     """compute the vector whose i-th element is the mean of the
     i-th elements of the input vectors"""
