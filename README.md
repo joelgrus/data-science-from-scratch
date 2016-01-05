@@ -21,6 +21,8 @@ python recommender_systems.py
 
 Additionally, I've collected all the [links](https://github.com/joelgrus/data-science-from-scratch/blob/master/links.md) from the book.
 
+And, by popular demand, here's an [index of functions](https://docs.google.com/spreadsheets/d/1mjGp94ehfxWOEaAFJsPiHqIeOioPH1vN1PdOE6v1az8/edit?usp=sharing) defined in the book, by chapter and page number. (Right now it's just a spreadsheet, I'm working on making it easier to use.
+
 ## Table of Contents
 
 1. Introduction
