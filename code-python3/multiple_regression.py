@@ -1,7 +1,7 @@
 from collections import Counter
 from functools import partial
 from linear_algebra import dot, vector_add
-from statistics import median, standard_deviation
+from stats import median, standard_deviation
 from probability import normal_cdf
 from gradient_descent import minimize_stochastic
 from simple_linear_regression import total_sum_of_squares

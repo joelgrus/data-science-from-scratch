@@ -1,6 +1,6 @@
 from collections import Counter
 from linear_algebra import distance
-from statistics import mean
+from stats import mean
 import math, random
 import matplotlib.pyplot as plt
 

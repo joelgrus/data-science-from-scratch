@@ -1,6 +1,6 @@
 from collections import Counter, defaultdict
 from linear_algebra import vector_subtract
-from statistics import mean, correlation, standard_deviation, de_mean
+from stats import mean, correlation, standard_deviation, de_mean
 from gradient_descent import minimize_stochastic
 import math, random
 
