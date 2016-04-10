@@ -68,7 +68,7 @@ def patch(x, y, hatch, color):
 
 def show_weights(neuron_idx):
     weights = network[0][neuron_idx]
-    abs_weights = map(abs, weights)
+    abs_weights = [abs(weight) for weight in weights]
 
     grid = [abs_weights[row:(row+5)] # turn the weights into a 5x5 grid
             for row in range(0,25,5)] # [weights[0:5], ..., weights[20:25]]
