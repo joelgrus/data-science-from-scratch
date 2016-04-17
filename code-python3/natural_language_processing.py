@@ -1,4 +1,3 @@
-from __future__ import division
 import math, random, re
 from collections import defaultdict, Counter
 from bs4 import BeautifulSoup
@@ -39,8 +38,8 @@ def get_document():
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html5lib')
 
-    content = soup.find("div", "article-body")        # find article-body div
-    regex = r"[\w']+|[\.]"                            # matches a word or a period
+    content = soup.find("div", "article-body")         # find article-body div
+    regex = r"[\w']+|[\.]"                             # matches a word or a period
 
     document = []
 
@@ -176,7 +175,7 @@ topic_word_counts = [Counter() for _ in range(K)]
 
 topic_counts = [0 for _ in range(K)]
 
-document_lengths = map(len, documents)
+document_lengths = [len(d) for d in documents]
 
 distinct_words = set(word for document in documents for word in document)
 W = len(distinct_words)
@@ -244,20 +243,20 @@ if __name__ == "__main__":
 
     document = get_document()
 
-    bigrams = zip(document, document[1:])
+    bigrams = list(zip(document, document[1:]))
     transitions = defaultdict(list)
     for prev, current in bigrams:
         transitions[prev].append(current)
 
     random.seed(0)
-    print "bigram sentences"
+    print("bigram sentences")
     for i in range(10):
-        print i, generate_using_bigrams(transitions)
-    print
+        print(i, generate_using_bigrams(transitions))
+    print()
 
     # trigrams
 
-    trigrams = zip(document, document[1:], document[2:])
+    trigrams = list(zip(document, document[1:], document[2:]))
     trigram_transitions = defaultdict(list)
     starts = []
 
@@ -268,10 +267,10 @@ if __name__ == "__main__":
 
         trigram_transitions[(prev, current)].append(next)
 
-    print "trigram sentences"
+    print("trigram sentences")
     for i in range(10):
-        print i, generate_using_trigrams(starts, trigram_transitions)
-    print
+        print(i, generate_using_trigrams(starts, trigram_transitions))
+    print()
 
     grammar = {
         "_S"  : ["_NP _VP"],
@@ -285,31 +284,31 @@ if __name__ == "__main__":
         "_V"  : ["learns", "trains", "tests", "is"]
     }
 
-    print "grammar sentences"
+    print("grammar sentences")
     for i in range(10):
-        print i, " ".join(generate_sentence(grammar))
-    print
+        print(i, " ".join(generate_sentence(grammar)))
+    print()
 
-    print "gibbs sampling"
+    print("gibbs sampling")
     comparison = compare_distributions()
-    for roll, (gibbs, direct) in comparison.iteritems():
-        print roll, gibbs, direct
+    for roll, (gibbs, direct) in comparison.items():
+        print(roll, gibbs, direct)
 
 
     # topic MODELING
 
     for k, word_counts in enumerate(topic_word_counts):
         for word, count in word_counts.most_common():
-            if count > 0: print k, word, count
+            if count > 0: print(k, word, count)
 
     topic_names = ["Big Data and programming languages",
-                   "Python and statistics",
                    "databases",
-                   "machine learning"]
+                   "machine learning",
+                   "statistics"]
 
     for document, topic_counts in zip(documents, document_topic_counts):
-        print document
+        print(document)
         for topic, count in topic_counts.most_common():
             if count > 0:
-                print topic_names[topic], count,
-        print
+                print(topic_names[topic], count)
+        print()

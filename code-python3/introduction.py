@@ -1,5 +1,3 @@
-from __future__ import division
-
 # at this stage in the book we haven't actually installed matplotlib,
 # comment this out if you need to
 from matplotlib import pyplot as plt
@@ -79,7 +77,7 @@ def friends_of_friend_ids(user):
                    if not_the_same(user, foaf)    # who aren't me
                    and not_friends(user, foaf))   # and aren't my friends
 
-print friends_of_friend_ids(users[3]) # Counter({0: 2, 5: 1})
+print(friends_of_friend_ids(users[3])) # Counter({0: 2, 5: 1})
 
 interests = [
     (0, "Hadoop"), (0, "Big Data"), (0, "HBase"), (0, "Java"),
@@ -168,7 +166,7 @@ for salary, tenure in salaries_and_tenures:
 
 average_salary_by_bucket = {
   tenure_bucket : sum(salaries) / len(salaries)
-  for tenure_bucket, salaries in salary_by_tenure_bucket.iteritems()
+  for tenure_bucket, salaries in salary_by_tenure_bucket.items()
 }
 
 
@@ -196,60 +194,60 @@ words_and_counts = Counter(word
 
 if __name__ == "__main__":
 
-    print
-    print "######################"
-    print "#"
-    print "# FINDING KEY CONNECTORS"
-    print "#"
-    print "######################"
-    print
+    print()
+    print("######################")
+    print("#")
+    print("# FINDING KEY CONNECTORS")
+    print("#")
+    print("######################")
+    print()
 
 
-    print "total connections", total_connections
-    print "number of users", num_users
-    print "average connections", total_connections / num_users
-    print
+    print("total connections", total_connections)
+    print("number of users", num_users)
+    print("average connections", total_connections / num_users)
+    print()
 
     # create a list (user_id, number_of_friends)
     num_friends_by_id = [(user["id"], number_of_friends(user))
                          for user in users]
 
-    print "users sorted by number of friends:"
-    print sorted(num_friends_by_id,
-                 key=lambda (user_id, num_friends): num_friends, # by number of friends
-                 reverse=True)                                   # largest to smallest
+    print("users sorted by number of friends:")
+    print(sorted(num_friends_by_id,
+                 key=lambda pair: pair[1],                       # by number of friends
+                 reverse=True))                                  # largest to smallest
 
-    print
-    print "######################"
-    print "#"
-    print "# DATA SCIENTISTS YOU MAY KNOW"
-    print "#"
-    print "######################"
-    print
+    print()
+    print("######################")
+    print("#")
+    print("# DATA SCIENTISTS YOU MAY KNOW")
+    print("#")
+    print("######################")
+    print()
 
 
-    print "friends of friends bad for user 0:", friends_of_friend_ids_bad(users[0])
-    print "friends of friends for user 3:", friends_of_friend_ids(users[3])
+    print("friends of friends bad for user 0:", friends_of_friend_ids_bad(users[0]))
+    print("friends of friends for user 3:", friends_of_friend_ids(users[3]))
 
-    print
-    print "######################"
-    print "#"
-    print "# SALARIES AND TENURES"
-    print "#"
-    print "######################"
-    print
+    print()
+    print("######################")
+    print("#")
+    print("# SALARIES AND TENURES")
+    print("#")
+    print("######################")
+    print()
 
-    print "average salary by tenure", average_salary_by_tenure
-    print "average salary by tenure bucket", average_salary_by_bucket
+    print("average salary by tenure", average_salary_by_tenure)
+    print("average salary by tenure bucket", average_salary_by_bucket)
 
-    print
-    print "######################"
-    print "#"
-    print "# MOST COMMON WORDS"
-    print "#"
-    print "######################"
-    print
+    print()
+    print("######################")
+    print("#")
+    print("# MOST COMMON WORDS")
+    print("#")
+    print("######################")
+    print()
 
     for word, count in words_and_counts.most_common():
         if count > 1:
-            print word, count
+            print(word, count)
