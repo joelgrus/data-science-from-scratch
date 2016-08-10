@@ -68,7 +68,7 @@ def binomial(p, n):
     return sum(bernoulli_trial(p) for _ in range(n))
 
 def make_hist(p, n, num_points):
-
+    from matplotlib import pyplot as plt
     data = [binomial(p, n) for _ in range(num_points)]
 
     # use a bar chart to show the actual binomial samples
