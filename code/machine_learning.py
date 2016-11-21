@@ -4,7 +4,7 @@ import math, random
 
 #
 # data splitting
-#
+# abhishek goswami.
 
 def split_data(data, prob):
     """split data into fractions [prob, 1 - prob]"""
