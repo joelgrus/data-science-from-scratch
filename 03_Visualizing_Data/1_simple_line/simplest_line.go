@@ -1,13 +1,11 @@
 package main
 
 import (
-	"image/color"
 	"strings"
 
 	"github.com/gonum/plot"
 	"github.com/gonum/plot/plotter"
 	"github.com/gonum/plot/vg"
-	"github.com/gonum/plot/vg/draw"
 )
 
 func main() {
@@ -28,14 +26,12 @@ func main() {
 	p.NominalX(years...)
 	p.Y.Label.Text = "Billions of $"
 
-	line, pts, err := plotter.NewLinePoints(xys)
-	pts.Shape = draw.CircleGlyph{}
-	pts.Color = color.RGBA{G: 128, A: 255}
+	line, err := plotter.NewLine(xys)
 	check(err)
-	p.Add(line, pts)
+	p.Add(line)
 
 	// Save the plot to a PNG file.
-	err = p.Save(14*vg.Centimeter, 10*vg.Centimeter, "simple_line.png")
+	err = p.Save(14*vg.Centimeter, 10*vg.Centimeter, "simplest_line.png")
 	check(err)
 }
 
