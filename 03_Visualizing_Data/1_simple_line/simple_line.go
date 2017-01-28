@@ -1,7 +1,6 @@
 package main
 
 import (
-	"math/rand"
 	"strings"
 
 	"github.com/gonum/plot"
@@ -32,22 +31,8 @@ func main() {
 	p.Add(line)
 
 	// Save the plot to a PNG file.
-	err = p.Save(4*vg.Inch, 4*vg.Inch, "simple_line.png")
+	err = p.Save(14*vg.Centimeter, 10*vg.Centimeter, "simple_line.png")
 	check(err)
-}
-
-// randomPoints returns some random x, y points.
-func randomPoints(n int) plotter.XYs {
-	pts := make(plotter.XYs, n)
-	for i := range pts {
-		if i == 0 {
-			pts[i].X = rand.Float64()
-		} else {
-			pts[i].X = pts[i-1].X + rand.Float64()
-		}
-		pts[i].Y = pts[i].X + 10*rand.Float64()
-	}
-	return pts
 }
 
 func check(e error) {
