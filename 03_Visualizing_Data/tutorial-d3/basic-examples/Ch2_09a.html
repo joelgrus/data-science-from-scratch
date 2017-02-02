@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://d3js.org/d3.v3.js"></script>
+    </head>
+    <body>
+        <p>The first paragraph</p>
+        <p>The second paragraph</p>
+        <p>The third paragraph</p>
+        <p>The last paragraph</p>
+        <script type="text/javascript">
+            d3.selectAll("p").style("color", function() {
+                 r = Math.round((Math.random() * 255));
+                  g = Math.round((Math.random() * 255));
+                   b = Math.round((Math.random() * 255));
+                    return "rgb("+r+", "+g+", "+b+")";
+            });
+        </script>
+
+    </body>
+</html>
+
