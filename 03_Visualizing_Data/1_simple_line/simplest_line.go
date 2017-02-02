@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/gonum/plot"
 	"github.com/gonum/plot/plotter"
 	"github.com/gonum/plot/vg"
+	"github.com/twgophers/browser"
 )
 
 func main() {
@@ -31,8 +34,17 @@ func main() {
 	p.Add(line)
 
 	// Save the plot to a PNG file.
-	err = p.Save(14*vg.Centimeter, 10*vg.Centimeter, "simplest_line.png")
+	fileName := "simplest_line.png"
+	err = p.Save(14*vg.Centimeter, 10*vg.Centimeter, fileName)
 	check(err)
+
+	// Display the file
+	fullPath, err := filepath.Abs(fileName)
+	check(err)
+	url := "file://" + fullPath
+	if !browser.Open(url) {
+		fmt.Println("Could not open browser on: " + url)
+	}
 }
 
 func check(e error) {
