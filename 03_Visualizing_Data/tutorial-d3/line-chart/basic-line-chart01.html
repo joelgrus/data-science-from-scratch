@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<style>
+    body {
+        font: 10px Verdana;
+    }
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #333;
+    }
+    .grid .tick {
+        stroke: lightgrey;
+        opacity: 0.7;
+    }
+    .grid path {
+        stroke-width: 0;
+    }
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+</style>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://d3js.org/d3.v3.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var margin = {top: 70, right: 20, bottom: 30, left: 50},
+                w = 400 - margin.left - margin.right,
+                h = 400 - margin.top - margin.bottom;
+
+            var parseDate = d3.time.format("%d-%b-%y").parse;
+            var x = d3.time.scale().range([0, w]);
+            var y = d3.scale.linear().range([h, 0]);
+
+            var xAxis = d3.svg.axis()
+               .scale(x)
+               .orient("bottom")
+               .ticks(5);
+
+            var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left")
+                  .ticks(5);
+
+            var xGrid = d3.svg.axis()
+                 .scale(x)
+                 .orient("bottom")
+                 .ticks(5)
+                 .tickSize(-h, 0, 0)
+                 .tickFormat("");
+
+           var yGrid = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(5)
+                .tickSize(-w, 0, 0)
+                .tickFormat("");
+
+            var svg = d3.select("body").append("svg")
+               .attr("width", w + margin.left + margin.right)
+               .attr("height", h + margin.top + margin.bottom)
+               .append("g")
+               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svg.append("g")
+                .attr("class", "x axis")
+                // .attr("transform", "translate(0," + h + ")")
+                .call(xAxis);
+
+            svg.append("g")
+               .attr("class", "y axis")
+               .call(yAxis);
+
+            svg.append("g")
+               .attr("class", "grid")
+               .attr("transform", "translate(0," + h + ")")
+               .call(xGrid);
+
+            svg.append("g")
+               .attr("class", "grid")
+               .call(yGrid);
+
+            d3.csv("http://localhost:8080/data_01.csv", function(error, data) {
+                data.forEach(function(d) {
+                  d.date = parseDate(d.date);
+                  d.attendee = +d.attendee;
+                });
+
+                x.domain(d3.extent(data, function(d) { return d.date; }));
+                y.domain(d3.extent(data, function(d) { return d.attendee; }));
+
+                var line = d3.svg.line()
+                  .x(function(d) { return x(d.date); })
+                  .y(function(d) { return y(d.attendee); });
+
+                var labels = svg.append("g")
+                  .attr("class", "labels");
+
+                  labels.append("text")
+                   .attr("transform", "translate(0," + h + ")")
+                   .attr("x", (w-margin.right))
+                   .attr("dx", "-1.1em")
+                   .attr("dy", "2.0em")
+                   .text("[Months]");
+
+                  labels.append("text")
+                   .attr("transform", "rotate(-90)")
+                   .attr("y", -40)
+                   .attr("dy", ".71em")
+                   .style("text-anchor", "end")
+                   .text("Attendees");
+
+                var title = svg.append("g")
+                  .attr("class", "title")
+
+                title.append("text")
+                  .attr("x", (w/2))
+                  .attr("y", -30)
+                  .attr("text-anchor", "middle")
+                  .attr("font-size", "22px")
+                  .text("A D3 line chart from CSV file");
+
+                svg.append("path")
+                  .datum(data)
+                  .attr("class", "line")
+                  .attr("d", line);
+            });
+
+
+        </script>
+
+    </body>
+</html>

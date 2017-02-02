@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://d3js.org/d3.v3.js"></script>
+    </head>
+    <body>
+        <div id="circle"></div>
+        <script type="text/javascript">
+            var svg = d3.select('#circle')
+                        .append('svg')
+                        .attr('width', 200)
+                        .attr('height', 200);
+
+            svg.append('circle')
+               .style('stroke', 'black')
+               .style('fill', 'yellow')
+               .attr('r', 40)
+               .attr('cx', 50)
+               .attr('cy', 50)
+               .transition()
+               .delay(100)
+                .duration(4000)
+                .attr("r", 10)
+                .attr("cx", 50)
+                .style("fill", "black");
+        </script>
+
+    </body>
+</html>
+
