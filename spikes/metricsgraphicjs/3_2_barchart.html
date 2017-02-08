@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html>
+    <head>
+        <link href='lib/dist/metricsgraphics.css' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+        <div id="academy-awards"></div>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="https://d3js.org/d3.v4.min.js" charset='utf-8'></script>
+        <script type="text/javascript" src="lib/dist/metricsgraphics.js"></script>
+        <script type="text/javascript">
+         var data = [
+             {movie: "Annie Hall", oscars: 5},
+             {movie: "Ben-Hur", oscars: 11},
+             {movie: "Casablanca", oscars: 3},
+             {movie: "Gandhi", oscars: 8},
+             {movie: "West Side Story", oscars: 10}
+         ];
+         MG.data_graphic({
+             title: "relationship",
+             description: "barr chart",
+             chart_type: 'bar',
+             data: data,
+             width: 650,
+             height: 300,
+             target: '#academy-awards',
+             x_accessor: 'movie',
+             y_accessor: 'oscars'
+         })
+        </script>
+    </body>
+</html>
