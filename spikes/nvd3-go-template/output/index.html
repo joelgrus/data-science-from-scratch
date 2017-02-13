@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="../nvd3/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="../nvd3/nv.d3.js"></script>
+
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .dashed {
+            stroke-dasharray: 5,5;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
+<div id="chart1"></div>
+
+<script>
+    
+    var chart;
+    var data;
+    var legendPosition = "top";
+
+    nv.addGraph(function() {
+        chart = nv.models.lineChart()
+            .options({
+                duration: 300,
+                useInteractiveGuideline: true,
+                showLegend: false,
+                showYAxis: true,
+                showXAxis: true
+            })
+        ;
+
+        
+        chart.xAxis
+            .axisLabel("Time (s)")
+            .staggerLabels(true)
+        ;
+
+        chart.yAxis
+            .axisLabel('Billion of $')
+        ;
+
+        data = sinAndCos();
+
+        d3.select('#chart1').append('svg')
+            .datum(data)
+            .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+
+    function sinAndCos() {
+        var cos = [];
+
+        
+          cos.push({x:  1950 , y:  300.2 })
+        
+          cos.push({x:  1950 , y:  300.2 })
+        
+          cos.push({x:  1960 , y:  543.3 })
+        
+          cos.push({x:  1970 , y:  1075.9 })
+        
+          cos.push({x:  1980 , y:  2862.5 })
+        
+          cos.push({x:  1990 , y:  5979.6 })
+        
+          cos.push({x:  2000 , y:  10289.7 })
+        
+          cos.push({x:  2010 , y:  14958.3 })
+        
+
+        return [
+            {
+                values: cos,
+                key: "Nominal GDP",
+                color: "#2ca02c"
+            }
+        ];
+    }
+
+</script>
+
+
+</body>
+</html>
