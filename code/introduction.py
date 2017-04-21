@@ -117,11 +117,11 @@ interests_by_user_id = defaultdict(list)
 for user_id, interest in interests:
     interests_by_user_id[user_id].append(interest)
 
-def most_common_interests_with(user_id):
+def most_common_interests_with(user):
     return Counter(interested_user_id
-        for interest in interests_by_user_id["user_id"]
+        for interest in interests_by_user_id[user["id"]]
         for interested_user_id in user_ids_by_interest[interest]
-        if interested_user_id != user_id)
+        if interested_user_id != user["id"])
 
 ###########################
 #                         #
