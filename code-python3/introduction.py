@@ -18,8 +18,7 @@ users = [
     { "id": 6, "name": "Hicks" },
     { "id": 7, "name": "Devin" },
     { "id": 8, "name": "Kate" },
-    { "id": 9, "name": "Klein" },
-    { "id": 10, "name": "Jen" }
+    { "id": 9, "name": "Klein" }
 ]
 
 friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
@@ -117,7 +116,7 @@ for user_id, interest in interests:
 
 def most_common_interests_with(user_id):
     return Counter(interested_user_id
-        for interest in interests_by_user_id["user_id"]
+        for interest in interests_by_user_id[user_id]
         for interested_user_id in user_ids_by_interest[interest]
         if interested_user_id != user_id)
 
