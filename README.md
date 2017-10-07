@@ -12,17 +12,23 @@ w = [4, 5, 6]
 print distance(v, w)
 print vector_mean([v, w])
 ```
-  
+
 Or can be run from the command line to get a demo of what it does (and to execute the examples from the book):
 
 ```bat
 python recommender_systems.py
-```  
+```
 
 Additionally, I've collected all the [links](https://github.com/joelgrus/data-science-from-scratch/blob/master/links.md) from the book.
 
-And, by popular demand, I made an index of functions defined in the book, by chapter and page number. 
+And, by popular demand, I made an index of functions defined in the book, by chapter and page number.
 The data is in a [spreadsheet](https://docs.google.com/spreadsheets/d/1mjGp94ehfxWOEaAFJsPiHqIeOioPH1vN1PdOE6v1az8/edit?usp=sharing), or I also made a toy (experimental) [searchable webapp](http://joelgrus.com/experiments/function-index/).
+
+## Installations
+
+```
+pip install -r requirements.txt
+```
 
 ## Table of Contents
 
