@@ -395,7 +395,7 @@ if __name__ == "__main__":
 
     data = []
 
-    with open("comma_delimited_stock_prices.csv", "r", encoding='utf8', newline='') as f:
+    with open("../data/comma_delimited_stock_prices.csv", "r", encoding='utf8', newline='') as f:
         reader = csv.reader(f)
         for line in parse_rows_with(reader, [dateutil.parser.parse, None, float]):
             data.append(line)
@@ -405,7 +405,7 @@ if __name__ == "__main__":
             print(row)
 
     print("stocks")
-    with open("stocks.txt", "r", encoding='utf8', newline='') as f:
+    with open("../data/stocks.txt", "r", encoding='utf8', newline='') as f:
         reader = csv.DictReader(f, delimiter="\t")
         data = [parse_dict(row, { 'date' : dateutil.parser.parse,
                                   'closing_price' : float })
