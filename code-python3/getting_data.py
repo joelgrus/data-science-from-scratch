@@ -68,7 +68,7 @@ def plot_years(plt, books):
                           if get_year(book) <= 2014)
 
     years = sorted(year_counts)
-    book_counts = [year_counts[year] for year in x]
+    book_counts = [year_counts[year] for year in years]
     plt.bar([x - 0.5 for x in years], book_counts)
     plt.xlabel("year")
     plt.ylabel("# of data books")
