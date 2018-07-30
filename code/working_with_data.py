@@ -203,7 +203,7 @@ def rescale(data_matrix):
         if stdevs[j] > 0:
             return (data_matrix[i][j] - means[j]) / stdevs[j]
         else:
-            return data_matrix[i][j]
+            return data_matrix[i][j] - means[j]  # should be 0 since stdevs[j] = 0
 
     num_rows, num_cols = shape(data_matrix)
     return make_matrix(num_rows, num_cols, rescaled)
