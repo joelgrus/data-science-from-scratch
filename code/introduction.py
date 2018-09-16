@@ -20,8 +20,7 @@ users = [
     { "id": 6, "name": "Hicks" },
     { "id": 7, "name": "Devin" },
     { "id": 8, "name": "Kate" },
-    { "id": 9, "name": "Klein" },
-    { "id": 10, "name": "Jen" }
+    { "id": 9, "name": "Klein" }
 ]
 
 friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
@@ -47,6 +46,18 @@ total_connections = sum(number_of_friends(user)
 
 num_users = len(users)
 avg_connections = total_connections / num_users # 2.4
+
+# create a list (user_id, number_of_friends)
+num_friends_by_id = [(user["id"], number_of_friends(user))
+                     for user in users]
+
+sorted(num_friends_by_id,                               # get it sorted
+       key=lambda (user_id, num_friends): num_friends,  # by num_friends
+       reverse = True)                                  # largest to smallest
+
+# each pair is (user_id, num_friends)
+# [(1, 3), (2, 3), (3, 3), (5, 3), (8, 3),
+#  (0, 2), (4, 2), (6, 2), (7, 2), (9, 1)]
 
 ################################
 #                              #
