@@ -23,8 +23,8 @@ def plot_estimated_derivative():
     # plot to show they're basically the same
     import matplotlib.pyplot as plt
     x = range(-10,10)
-    plt.plot(x, map(derivative, x), 'rx')           # red  x
-    plt.plot(x, map(derivative_estimate, x), 'b+')  # blue +
+    plt.plot(x, list(map(derivative, x)), 'rx')           # red  x
+    plt.plot(x, list(map(derivative_estimate, x)), 'b+')  # blue +
     plt.show()                                      # purple *, hopefully
 
 def partial_difference_quotient(f, v, i, h):
