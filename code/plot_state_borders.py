@@ -5,7 +5,7 @@ points = []
 
 lat_long_regex = r"<point lat=\"(.*)\" lng=\"(.*)\""
 
-with open("states.txt", "r") as f:
+with open("../data/states.txt", "r") as f:
     lines = [line for line in f]
 
 for line in lines:

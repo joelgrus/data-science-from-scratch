@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     print("tab delimited stock prices:")
 
-    with open('tab_delimited_stock_prices.txt', 'r', encoding='utf8',newline='') as f:
+    with open('../data/tab_delimited_stock_prices.txt', 'r', encoding='utf8',newline='') as f:
         reader = csv.reader(f, delimiter='\t')
         # reader = csv.reader(codecs.iterdecode(f, 'utf-8'), delimiter='\t')
         for row in reader:
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 
     print("colon delimited stock prices:")
 
-    with open('colon_delimited_stock_prices.txt', 'r', encoding='utf8',newline='') as f:
+    with open('../data/colon_delimited_stock_prices.txt', 'r', encoding='utf8',newline='') as f:
         reader = csv.DictReader(f, delimiter=':')
         # reader = csv.DictReader(codecs.iterdecode(f, 'utf-8'), delimiter=':')
         for row in reader:
@@ -181,11 +181,11 @@ if __name__ == "__main__":
 
     print()
 
-    print("writing out comma_delimited_stock_prices.txt")
+    print("writing out ../data/comma_delimited_stock_prices.txt")
 
     today_prices = { 'AAPL' : 90.91, 'MSFT' : 41.68, 'FB' : 64.5 }
 
-    with open('comma_delimited_stock_prices.txt','w', encoding='utf8',newline='') as f:
+    with open('../data/comma_delimited_stock_prices.txt','w', encoding='utf8',newline='') as f:
         writer = csv.writer(f, delimiter=',')
         for stock, price in today_prices.items():
             writer.writerow([stock, price])
