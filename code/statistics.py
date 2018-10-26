@@ -47,7 +47,7 @@ def median(v):
         
 def quantile(x, p):
     """returns the pth-percentile value in x"""
-    p_index = int(p * len(x))
+    p_index = int(p * len(x)) - 1 # for sorted list x is indexed from 0 to len(x)-1
     return sorted(x)[p_index]
 
 def mode(x):
