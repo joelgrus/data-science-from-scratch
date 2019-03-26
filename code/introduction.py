@@ -46,7 +46,7 @@ total_connections = sum(number_of_friends(user)
                         for user in users) # 24
 
 num_users = len(users)
-avg_connections = total_connections / num_users # 2.4
+avg_connections = total_connections / num_users # 2.18
 
 ################################
 #                              #
