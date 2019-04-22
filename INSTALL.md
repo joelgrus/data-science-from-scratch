@@ -1,3 +1,8 @@
 # How to Install Python
 
-TODO: how to install python
+If you don't already have Python, I strongly recommend you install the Anaconda version,
+which includes many of the libraries needed for data science:
+
+https://www.anaconda.com/distribution/#download-section
+
+Follow the instructions indicated for your platform.
