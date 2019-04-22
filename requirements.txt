@@ -1,0 +1,27 @@
+# For a nicer terminal
+ipython
+
+# For plotting graphs
+matplotlib
+
+# For reading in images
+pillow
+
+# For making HTTP requests
+requests
+
+# For parsing HTML
+beautifulsoup4
+html5lib
+
+# For accessing Python
+twython
+
+# For generating progress bars
+tqdm
+
+# For downloading MNIST data
+mnist
+
+# For parsing dates
+python-dateutil
