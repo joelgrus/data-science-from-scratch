@@ -18,7 +18,7 @@ and so on and so forth.
 
 Two notes:
 
-1. In order to use the library like this, you need to be in the root directory (that is, the directory that contains the `scratch` folder). If you are in this directory, the imports won't work.
+1. In order to use the library like this, you need to be in the root directory (that is, the directory that contains the `scratch` folder). If you are in the `scratch` directory itself, the imports won't work.
 
 2. It's possible that it will just work. It's also possible that you may need to add the root directory to your `PYTHONPATH`, if you are on Linux or OSX this is as simple as 
 
