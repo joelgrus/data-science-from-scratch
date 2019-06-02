@@ -714,12 +714,12 @@ def ugly_function(value: int, operation: Union[str, int, float, bool]) -> int:
     ...
 
 def total(xs: list) -> float:
-    return sum(total)
+    return sum(xs)
 
 from typing import List  # note capital L
 
 def total(xs: List[float]) -> float:
-    return sum(total)
+    return sum(xs)
 
 # This is how to type-annotate variables when you define them.
 # But this is unnecessary; it's "obvious" x is an int.
@@ -769,4 +769,3 @@ Numbers = List[Number]
 
 def total(xs: Numbers) -> Number:
     return sum(xs)
-
