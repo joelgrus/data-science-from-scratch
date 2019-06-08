@@ -38,7 +38,7 @@ If you are on Windows, it's [potentially more complicated](https://stackoverflow
 4. [Linear Algebra](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/linear_algebra.py)
 5. [Statistics](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/statistics.py)
 6. [Probability](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/probability.py)
-7. [Hypothesis and Inference](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/hypothesis_and_inference.py)
+7. [Hypothesis and Inference](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/inference.py)
 8. [Gradient Descent](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/gradient_descent.py)
 9. [Getting Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/getting_data.py)
 10. [Working With Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/working_with_data.py)
