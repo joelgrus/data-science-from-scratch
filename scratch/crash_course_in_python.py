@@ -472,6 +472,8 @@ def smallest_item(xs):
     assert xs, "empty list has no smallest item"
     return min(xs)
 
+# OBJECT-ORIENTED PROGRAMMING
+
 class CountingClicker:
     """A class can/should have a docstring, just like a function"""
 
