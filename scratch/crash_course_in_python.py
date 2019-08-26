@@ -516,11 +516,15 @@ assert clicker2.read() == 1
 clicker2.reset()
 assert clicker2.read() == 1, "reset shouldn't do anything"
 
+# ITERABLES AND GENERATORS
+# Create generators is with functions and the yield operator:
 def generate_range(n):
     i = 0
     while i < n:
         yield i   # every call to yield produces a value of the generator
         i += 1
+
+# Following loop will consume the yielded values one at a time until none are left:
 
 for i in generate_range(10):
     print(f"i: {i}")
@@ -562,6 +566,9 @@ for name in names:
 for i, name in enumerate(names):
     print(f"name {i} is {name}")
 
+# RANDOMNESS
+# We will frequently need to generate random numbers, which we can do with the random module:
+
 import random
 random.seed(10)  # this ensures we get the same results every time
 
@@ -592,6 +599,8 @@ winning_numbers = random.sample(lottery_numbers, 6)  # [16, 36, 10, 6, 25, 9]
 
 four_with_replacement = [random.choice(range(10)) for _ in range(4)]
 print(four_with_replacement)  # [9, 4, 4, 2]
+
+# REGULAR EXPRESSIONS
 
 import re
 
