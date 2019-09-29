@@ -21,7 +21,7 @@ plt.title("Various Normal pdfs")
 # plt.show()
 
 
-plt.savefig('im/various_normal_pdfs.png')
+# plt.savefig('im/various_normal_pdfs.png')
 plt.gca().clear()
 plt.close()
 plt.clf()
