@@ -22,7 +22,7 @@ popular_interests = Counter(interest
                             for user_interests in users_interests
                             for interest in user_interests)
 
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 def most_popular_new_interests(
         user_interests: List[str],
