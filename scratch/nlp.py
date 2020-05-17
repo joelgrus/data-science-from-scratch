@@ -24,7 +24,7 @@ url = "https://www.oreilly.com/ideas/what-is-data-science"
 html = requests.get(url).text
 soup = BeautifulSoup(html, 'html5lib')
 
-content = soup.find("div", "article-body")   # find article-body div
+content = soup.find("div", "main-post-radar-content")   # find main-post-radar-content div
 regex = r"[\w']+|[\.]"                       # matches a word or a period
 
 document = []
@@ -643,7 +643,7 @@ def main():
     companies = list({b.text
                       for b in soup("b")
                       if "h4" in b.get("class", ())})
-    assert len(companies) == 101
+    assert len(companies) == 102
     
     vocab = Vocabulary([c for company in companies for c in company])
     
