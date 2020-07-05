@@ -43,7 +43,7 @@ If you are on Windows, it's [potentially more complicated](https://stackoverflow
 9. [Getting Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/getting_data.py)
 10. [Working With Data](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/working_with_data.py)
 11. [Machine Learning](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/machine_learning.py)
-12. [k-Nearest Neighbors](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/nearest_neighbors.py)
+12. [k-Nearest Neighbors](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/k_nearest_neighbors.py)
 13. [Naive Bayes](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/naive_bayes.py)
 14. [Simple Linear Regression](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/simple_linear_regression.py)
 15. [Multiple Regression](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/multiple_regression.py)
