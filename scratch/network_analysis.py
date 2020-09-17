@@ -163,22 +163,52 @@ def page_rank(users: List[User],
               endorsements: List[Tuple[int, int]],
               damping: float = 0.85,
               num_iters: int = 100) -> Dict[int, float]:
+
+    num_users = len(users)
+
     # Compute how many people each person endorses
-    outgoing_counts = Counter(target for source, target in endorsements)
+    # outgoing_counts = Counter(target for source, target in endorsements)
+
+    # In my version you need for each node/user
+    # not only the counts of outgoing links, but
+    # the set of user/node ids connected by outgoing links
+    outgoing_links = [set() for _ in range(num_users)]
+    for link in endorsements:
+        outgoing_links[link[0]].add(link[1])
 
     # Initially distribute PageRank evenly
-    num_users = len(users)
     pr = {user.id : 1 / num_users for user in users}
 
     # Small fraction of PageRank that each node gets each iteration
-    base_pr = (1 - damping) / num_users
+    # In order to assure normalisation the "base_pr" will vary for each node at each iteration
+    # It is rather a remainder than a base... but this is just semantics
+    # base_pr = (1 - damping) / num_users
 
     for iter in tqdm.trange(num_iters):
-        next_pr = {user.id : base_pr for user in users}  # start with base_pr
+        next_pr = {user.id : 0.0 for user in users}  # start with 0.0
 
-        for source, target in endorsements:
+        # for source, target in endorsements:
             # Add damped fraction of source pr to target
-            next_pr[target] += damping * pr[source] / outgoing_counts[source]
+            # next_pr[target] += damping * pr[source] / outgoing_counts[source]
+
+        for i in range(num_users):
+
+            # distribute fraction of the current PageRank of node i to the nodes connected by outgoing links
+            no_links_out = len(outgoing_links[i])
+            if no_links_out > 0: # just to avoid division by zero
+                links_pr = pr[i] * damping / no_links_out
+                for linked in outgoing_links[i]: # loop over set of outgoing links from node i
+                    # and distribute the damped fraction of node i's page rank
+                    next_pr[linked] += links_pr
+
+                # distribute the remaining pagerank of node i equally over all nodes
+                # I keep the variable name to demonstrate more clearly the changes from the base code
+                base_pr = pr[i] * (1.0 - damping) / num_users
+            else:
+                base_pr = pr[i]  / num_users
+
+            for j in next_pr.keys():
+                next_pr[j] += base_pr
 
         pr = next_pr
 
