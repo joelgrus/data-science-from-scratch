@@ -1,5 +1,6 @@
 
-# Just stick some data there
+# Just stick some data 
+# with keyword will automatically close the file mentioned in open function
 with open('email_addresses.txt', 'w') as f:
     f.write("joelgrus@gmail.com\n")
     f.write("joel@m.datasciencester.com\n")
