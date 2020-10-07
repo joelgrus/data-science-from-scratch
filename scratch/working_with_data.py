@@ -445,6 +445,17 @@ def project(v: Vector, w: Vector) -> Vector:
     projection_length = dot(v, w)
     return scalar_multiply(projection_length, w)
 
+data = de_mean(pca_data)
+w = first_principal_component(data)
+x = [project(v, w) for v in data[:10]]
+plt.scatter([v_i[0] for v_i in data], [v_i[1] for v_i in data])
+plt.plot([v_i[0] for v_i in x], [v_i[1] for v_i in x], "r")
+plt.xlim(-40, 30)
+plt.ylim(-30, 30)
+#plt.show()
+plt.savefig("im/first_principal_component.png")
+plt.gca().clear()
+
 from scratch.linear_algebra import subtract
 
 def remove_projection_from_vector(v: Vector, w: Vector) -> Vector:
