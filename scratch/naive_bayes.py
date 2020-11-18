@@ -112,9 +112,6 @@ p_if_ham = math.exp(sum(math.log(p) for p in probs_if_ham))
 # Should be about 0.83
 assert model.predict(text) == p_if_spam / (p_if_spam + p_if_ham)
 
-def drop_final_s(word):
-    return re.sub("s$", "", word)
-
 def main():
     import glob, re
     
