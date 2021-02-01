@@ -16,6 +16,16 @@ def square(x: float) -> float:
 
 def derivative(x: float) -> float:
     return 2 * x
+    
+def partial_difference_quotient(f: Callable[[Vector], float],
+                                v: Vector,
+                                i: int,
+                                h: float) -> float:
+    """Returns the i-th partial difference quotient of f at v"""
+    w = [v_j + (h if j == i else 0)    # add h to just the ith element of v
+         for j, v_j in enumerate(v)]
+
+    return (f(w) - f(v)) / h
 
 def estimate_gradient(f: Callable[[Vector], float],
                       v: Vector,
@@ -77,18 +87,7 @@ def main():
     # plt.show()
     
     
-    plt.close()
-    
-    def partial_difference_quotient(f: Callable[[Vector], float],
-                                    v: Vector,
-                                    i: int,
-                                    h: float) -> float:
-        """Returns the i-th partial difference quotient of f at v"""
-        w = [v_j + (h if j == i else 0)    # add h to just the ith element of v
-             for j, v_j in enumerate(v)]
-    
-        return (f(w) - f(v)) / h
-    
+    plt.close()    
     
     # "Using the Gradient" example
     
