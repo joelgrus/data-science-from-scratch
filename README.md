@@ -50,7 +50,7 @@ If you are on Windows, it's [potentially more complicated](https://stackoverflow
 16. [Logistic Regression](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/logistic_regression.py)
 17. [Decision Trees](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/decision_trees.py)
 18. [Neural Networks](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/neural_networks.py)
-19. [Deep Learning]
+19. [Deep Learning](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/deep_learning.py)
 20. [Clustering](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/clustering.py)
 21. [Natural Language Processing](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/nlp.py)
 22. [Network Analysis](https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/network_analysis.py)
