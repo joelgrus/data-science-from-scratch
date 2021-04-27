@@ -386,7 +386,7 @@ assert one_is_less_than_two
 assert not true_equals_false
 
 x = None
-assert x == None, "this is the not the Pythonic way to check for None"
+assert x == None, "this is not the Pythonic way to check for None"
 assert x is None, "this is the Pythonic way to check for None"
 
 
