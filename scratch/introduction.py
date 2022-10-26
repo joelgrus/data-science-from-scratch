@@ -139,12 +139,13 @@ interests_by_user_id = defaultdict(list)
 for user_id, interest in interests:
     interests_by_user_id[user_id].append(interest)
 
-def most_common_interests_with(user):
+def most_common_interests_with(target_user):
+    user = users[target_user]["id"]
     return Counter(
         interested_user_id
-        for interest in interests_by_user_id[user["id"]]
+        for interest in interests_by_user_id[user]
         for interested_user_id in user_ids_by_interest[interest]
-        if interested_user_id != user["id"]
+        if interested_user_id != user
     )
 
 salaries_and_tenures = [(83000, 8.7), (88000, 8.1),
