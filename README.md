@@ -1,4 +1,4 @@
-Data Science from Scratch
+Data Science from Scratch given:
 =========================
 
 Here's all the code and examples from the second edition of my book _Data Science from Scratch_. They require at least Python 3.6.
@@ -30,7 +30,7 @@ export PYTHONPATH=/path/to/where/you/cloned/this/repo
 
 If you are on Windows, it's [potentially more complicated](https://stackoverflow.com/questions/3701646/how-to-add-to-the-pythonpath-in-windows-so-it-finds-my-modules-packages).
 
-## Table of Contents
+## Table of Contents are :
 
 1. Introduction
 2. A Crash Course in Python
