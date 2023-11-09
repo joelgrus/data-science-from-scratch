@@ -20,13 +20,12 @@ import re
 from bs4 import BeautifulSoup
 import requests
 
-url = "https://www.oreilly.com/ideas/what-is-data-science"
+url = "http://radar.oreilly.com/2010/06/what-is-data-science.html"
 html = requests.get(url).text
 soup = BeautifulSoup(html, 'html5lib')
 
-content = soup.find("div", "article-body")   # find article-body div
-regex = r"[\w']+|[\.]"                       # matches a word or a period
-
+content = soup.find("div", id="body-content")  # find article-body div
+regex = r"[\w']+|[\.]"  # matches a word or a period
 document = []
 
 for paragraph in content("p"):
